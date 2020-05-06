@@ -23,15 +23,29 @@ navigator.mediaDevices.getUserMedia({
 	document.getElementById("cap").innerText = JSON.stringify(capabilities);
     if (capabilities.torch) {
       track.applyConstraints({
-        advanced: [{torch: true, zoom: 7.9 }]
+        advanced: [{torch: true }]
       })
-      .catch(e => console.log(e));
+      .catch(e => {
+	  	console.error('Failed to apply constraints: ', err);
+		document.getElementById("err2").innerText = JSON.stringify(err);
+	  });
     }
   }
   
 })
-.catch(err => console.error('getUserMedia() failed: ', err));
+.catch(err => {
+	console.error('getUserMedia() failed: ', err);
+	document.getElementById("err1").innerText = JSON.stringify(err);
+});
 </script>
 <video autoplay></video>
+<h1>Capabilities</h1>
 <p id="cap"></p>
+
+<h1>Errors</h1>
+<h2>GetUserMedia</h2>
+<p id="err1">None</p>
+<h2>Apply Constraints</h2>
+<p id="err2">None</p>
+
 </html>
